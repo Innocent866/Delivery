@@ -1,8 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SideNav from './SideNav'
 import '../Style/UsersChangePass.css'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const UsersChangePass = () => {
+
+  const [ currentPassword, setCurrentPassword ] = useState('')
+  const [ newPassword, setNewPassword ] = useState('')
+  const {adminId} = useParams()
+
+  const passData ={
+    currentPassword,
+    newPassword
+  }
+
+  const getData = async()=>{
+    try {
+      const data = await axios(`https://swifdropp.onrender.com/api/v1/admin/${adminId}/change-password`,{
+        method:'POST',
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(passData)
+      })
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+  },[adminId])
   return (
     <div className='container'>
         <h5 className='my-5'>Edit Users</h5>
@@ -16,14 +46,14 @@ const UsersChangePass = () => {
        
        <form action="">
         <label htmlFor="">Old Password</label>
-        <input type="text" className='input' placeholder='**************************'/>
+        <input type="text" className='input' placeholder='**************************' value={currentPassword} onChange={(e)=>setCurrentPassword(e.target.value)}/>
         <label htmlFor="">New Password</label>
-        <input type="text" className='input' placeholder='**************************'/>
+        <input type="text" className='input' placeholder='**************************' value={newPassword} onChange={(e)=>setNewPassword(e.target.value)}/>
         <label htmlFor="">Comfirm Password</label>
         <input type="text" className='input' placeholder='**************************'/>
 
         </form>
-       <div><button className='tbn'>CHANGE PASSWORD</button></div>
+       <div><button className='tbn' >CHANGE PASSWORD</button></div>
 
        </div>
         </div>

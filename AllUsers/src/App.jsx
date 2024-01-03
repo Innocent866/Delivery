@@ -24,7 +24,9 @@ const App = () => {
             <Route path="/Suspend" element={<Suspend />} />
 
             <Route element={<SideNav />} />
-            <Route path="/EditUsers" element={<EditUsers />} />
+            <Route path="/EditUsers/:adminId" element={<EditUsers />} />
+            <Route path="/personalInfo/:adminId" element={<EditUsers />} />
+
             <Route path="/UsersChangePass" element={<UsersChangePass />} />
             <Route
               path="/AllusersEditAddress"
